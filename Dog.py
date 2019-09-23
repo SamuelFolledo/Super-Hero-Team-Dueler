@@ -1,4 +1,4 @@
-#Dog.py
+#dog.py
 class Dog:
     def __init__(self, name, breed): #__init__ is a constructor, which is a method that runs whenever a new instance of your class is created
         self.name = name

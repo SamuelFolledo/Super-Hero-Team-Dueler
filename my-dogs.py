@@ -1,10 +1,10 @@
-import Dog
+import dog
 
-my_dog = Dog.Dog("Rex", "SuperDog")
+my_dog = dog.Dog("Rex", "SuperDog")
 my_dog.bark()
 
-annie = Dog.Dog("Annie", "SuperDog")
-samuel = Dog.Dog("Samuel", "SuperDog")
+annie = dog.Dog("Annie", "SuperDog")
+samuel = dog.Dog("Samuel", "SuperDog")
 
 samuel.sit()
 annie.roll()
