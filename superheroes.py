@@ -22,16 +22,14 @@ class Armor:
         self.max_block = max_block 
 
     def blocks(self):
-        block = random.randint(0, self.max_block)
-        print("block is: ", block)
-        return block
+        return random.randint(0, self.max_block)
     
 
 #Hero
 class Hero:
-    def __init__(self, name, current_health = 100):
+    def __init__(self, name, starting_health = 100):
         self.name = name
-        self.current_health = current_health
+        self.starting_health = self.current_health = starting_health
         self.abilities = list()
         self.armors = list()
         self.deaths = 0
@@ -60,7 +58,7 @@ class Hero:
         self.current_health -= damage_to_health
 
     def is_alive(self):
-        return self.current_health > 0 #returns True if health > 0
+        return self.current_health > 0 #returns True ifcurrent_health > 0
             
     def fight(self, opponent):
         if len(self.abilities) == 0 and len(opponent.abilities) == 0:
@@ -94,37 +92,50 @@ class Team():
         self.heroes = list()
         self.name = name
 
-    def add_hero(self, hero_name):
-        hero = self.check_hero(hero_name)
+    def add_hero(self, hero_name, current_health = 100):
+        hero = self.check_hero(hero_name, current_health)
         self.heroes.append(hero)
 
     def remove_hero(self, hero_name):
         hero = self.check_hero(hero_name)
         if hero in self.heroes: #if we have hero, get index and pop it
             hero_index = self.heroes.index(hero)
-            print(hero_index)
             self.heroes.pop(hero_index)
         else:
-            print(f"we dont have {hero_name}")
             return 0
 
     def view_all_heroes(self):
-        print("The heroes are:")
         if len(self.heroes) > 0:
+            print("The heroes are:")
             for hero in self.heroes:
-                print(f"\n- {hero.name}")
-        else:
-            print("We have no heroes to view")
+                print(f"- {hero.name}")
+            return
+        print("We have no heroes to view")
 
-    def check_hero(self, hero): #BONUS: check hero data type
+    def check_hero(self, hero, current_health = 100): #BONUS: check hero data type
         if isinstance(hero, str): #if hero is a string, then convert it to a hero class
-            temp_hero = Hero(hero)
+            temp_hero = Hero(hero, current_health)
             for hero in self.heroes: #search heroes if we have hero exist already
                 if hero.name == temp_hero.name:
                     return hero
             return temp_hero #return new Hero class
-        return(hero) #hero is not a string so just return it
+        return(hero) #if it's already a hero then just return it
 
+    def attack(self, other_team): #pick random players from both teams and make them fight
+        hero = random.choice(self.heroes)
+        opponent = random.choice(other_team.heroes)
+        hero.fight(opponent)
+
+    def revive_heroes(self, current_health=100): #reset heroes's current_health
+        for hero in self.heroes:
+            hero.current_health = current_health
+
+    def stats(self):
+        for hero in self.heroes:
+            print(f"- {hero.name} = {hero.kills}/{hero.deaths}")
+
+
+##################################################################################################
 def test_fight():
     hero1 = Hero("Superman")
     hero2 = Hero("Batman")
