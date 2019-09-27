@@ -35,11 +35,14 @@ class Hero:
         self.deaths = 0
         self.kills = 0
 
-    def add_armor(self, armor):
-        self.armors.append(armor)
-
     def add_ability(self, ability):
         self.abilities.append(ability)
+
+    def add_weapon(self, weapon):
+        self.abilities.append(weapon)
+
+    def add_armor(self, armor):
+        self.armors.append(armor)
 
     def attack(self):
         total_attack = 0
@@ -86,8 +89,9 @@ class Hero:
     def add_deaths(self, num_deaths):
         self.deaths += num_deaths
 
+#end of Hero
     
-class Team():
+class Team:
     def __init__(self, name):
         self.heroes = list()
         self.name = name
@@ -133,7 +137,78 @@ class Team():
     def stats(self):
         for hero in self.heroes:
             print(f"- {hero.name} = {hero.kills}/{hero.deaths}")
+#end of Team
 
+class Arena:
+    def __init__(self, team_one, team_two):
+        self.team_one = team_one
+        self.team_two = team_two
+
+    def create_ability(self):
+        ability_name = user_input("Choose a name for an ability: ")
+        ability_max_damage = user_int_input(f"Damage amount {ability_name}: ")
+        return Ability(ability_name, ability_max_damage)
+
+    def create_weapon(self):
+        weapon_name = user_input("Choose a name for a weapon: ")
+        weapon_max_damage = user_int_input(f"Damage amount {weapon_name}: ")
+        return Weapon(weapon_name, weapon_max_damage)
+    
+    def create_armor(self):
+        armor_name = user_input("Choose a name for an armor: ")
+        armor_max_defense = user_int_input(f"Damage amount {armor_name}: ")
+        return Armor(armor_name, armor_max_defense)
+
+    def create_hero(self):
+        hero_name = user_input("Choose a name for the hero: ")
+        hero_starting_health = user_int_input(f"Starting health amount for {hero_name}: ")
+        hero = Hero(hero_name, hero_starting_health)
+        
+        add_armor = choice(f"Would you like to add an armor for {hero.name}? ")
+        while add_armor:
+            armor = self.create_armor()
+            hero.add_armor(armor)
+            print(f"{hero.name} has a new armor: {armor.name}")
+            add_armor = choice(f"Would you like to add another armor for {hero.name}? ")
+
+        add_weapon = choice(f"Would you like to add a weapon for {hero.name}? ")
+        while add_weapon:
+            weapon = self.create_weapon()
+            hero.add_weapon(weapon)
+            print(f"{hero.name} has a new weapon: {weapon.name}")
+            add_weapon = choice(f"Would you like to add another weapon for {hero.name}? ")
+
+        add_ability = choice(f"Would you like to add an ability for {hero.name}? ")
+        while add_ability:
+            ability = self.create_ability()
+            hero.add_armor(ability)
+            print(f"{hero.name} has a new ability: {ability.name}")
+            add_ability = choice(f"Would you like to add another ability for {hero.name}? ")
+
+        print(f"{hero.name} has {hero.armors[0].name}, {hero.abilities[0].name}")
+        return hero
+
+#end of Arena
+
+
+
+def user_input(prompt): #string user input
+    user_input = input(prompt) 
+    while user_input == "" or any(char.isalnum == False and char.isspace() == False for char in user_input): #accept alphabets, numbers, and white spaces only
+        user_input = input("Please input letters, numbers, and white spaces only: ") #ask for the input again
+    return user_input
+
+def choice(prompt): #char user input for y/n
+    user_input = input(prompt)
+    while user_input != "y" and user_input != "Y" and user_input != "n" and user_input != "N": 
+        user_input = input("Please enter 'y' or 'n' only: ")
+    return True if user_input == "y" or user_input == "Y" else False
+
+def user_int_input(prompt): #int user input
+    user_input = input(prompt)
+    while user_input.isdigit() == False: #ensures the input is an integer
+        user_input = input("Please enter a whole number only: ")
+    return int(user_input) 
 
 ##################################################################################################
 def test_fight():
@@ -167,4 +242,7 @@ def test_team_methods():
     marvel_team.view_all_heroes()
 
 if __name__ == "__main__":
-    test_team_methods()
+    team1 = Team("Lakers")
+    team2 = Team("Celtics")
+    arena = Arena(team1, team2)
+    arena.create_hero()
