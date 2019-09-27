@@ -86,7 +86,7 @@ class Hero:
 
 
     def add_deaths(self, num_deaths):
-        self.num_deaths += num_deaths
+        self.deaths += num_deaths
 
     
 class Team():
