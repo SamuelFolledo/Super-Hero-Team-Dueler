@@ -19,6 +19,9 @@ Ever wondered which of your favorite super heroes would win in a fight? Team the
                                     - concept of writing code that verifies the behaviors we want our program to perform
 
 
+## New codes
+- ```if isinstance(object, str): //checks if object is a string data type```
+
 ## By [Samuel P. Folledo](https://github.com/SamuelFolledo)
 
 ### Links

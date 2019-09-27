@@ -82,17 +82,18 @@ class Team():
         self.heroes = list()
         self.name = name
 
-    def add_hero(self, hero):
+    def add_hero(self, hero_name):
+        hero = self.check_hero(hero_name)
         self.heroes.append(hero)
 
     def remove_hero(self, hero_name):
-        hero_names_list = list()
-        for hero in self.heroes:
-            hero_names_list.append(hero.name)
-        if hero_name in hero_names_list: #if we have hero, get index and pop
-            hero_index = hero_names_list.index(hero_name)
+        hero = self.check_hero(hero_name)
+        if hero in self.heroes: #if we have hero, get index and pop it
+            hero_index = self.heroes.index(hero)
+            print(hero_index)
             self.heroes.pop(hero_index)
         else:
+            print(f"we dont have {hero_name}")
             return 0
 
     def view_all_heroes(self):
@@ -103,6 +104,15 @@ class Team():
         else:
             print("We have no heroes to view")
 
+    def check_hero(self, hero): #BONUS: check hero data type
+        if isinstance(hero, str): #if hero is a string, then convert it to a hero class
+            temp_hero = Hero(hero)
+            for hero in self.heroes: #search heroes if we have hero exist already
+                if hero.name == temp_hero.name:
+                    return hero
+            return temp_hero #return new Hero class
+        return(hero) #hero is not a string so just return it
+
 def test_fight():
     hero1 = Hero("Superman")
     hero2 = Hero("Batman")
@@ -110,17 +120,13 @@ def test_fight():
     ability2 = Ability("Freeze breath", 10)
     ability3 = Ability("Bat mobile attack", 70)
     ability4 = Ability("Batarang", 20)
-
     hero1.add_ability(ability1)
     hero1.add_ability(ability2)
     hero2.add_ability(ability3)
     hero2.add_ability(ability4)
-
     hero1.fight(hero2)
 
-
-
-if __name__ == "__main__":
+def test_team_methods():
     hero1 = Hero("Superman")
     hero2 = Hero("Batman")
     hero3 = Hero("Spiderman")
@@ -129,9 +135,13 @@ if __name__ == "__main__":
     marvel_team.add_hero(hero1) 
     marvel_team.add_hero(hero2) 
     marvel_team.add_hero(hero3)
-    marvel_team.view_all_heroes() 
     marvel_team.remove_hero(hero4) 
     marvel_team.remove_hero("Spiderman")  
-    # marvel_team.add_hero("kobe")
-
     marvel_team.view_all_heroes()
+    marvel_team.add_hero("Kobe")
+    marvel_team.view_all_heroes()
+    marvel_team.remove_hero("Batman")
+    marvel_team.view_all_heroes()
+
+if __name__ == "__main__":
+    test_team_methods()
