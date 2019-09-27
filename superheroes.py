@@ -65,16 +65,28 @@ class Hero:
     def fight(self, opponent):
         if len(self.abilities) == 0 and len(opponent.abilities) == 0:
             print("Draw!")
-        else:
-            while self.is_alive() and opponent.is_alive():
-                opponent.take_damage(self.attack())
-                self.take_damage(opponent.attack())
-                if self.is_alive() and not opponent.is_alive(): #if self won and not opponent
-                    print(f"{self.name} won!")
-                elif not self.is_alive() and opponent.is_alive(): #if opponent won
-                    print(f"{opponent.name} won!")
-                else:
-                    print(f"{self.name} has {self.current_health}HP left\n{opponent.name} has {opponent.current_health}HP left")
+            return
+        while self.is_alive() and opponent.is_alive():
+            opponent.take_damage(self.attack())
+            self.take_damage(opponent.attack())
+            if self.is_alive() and not opponent.is_alive(): #if self won and not opponent
+                print(f"{self.name} won!")
+                self.add_kills(1)
+                opponent.add_deaths(1)
+            elif not self.is_alive() and opponent.is_alive(): #if opponent won
+                print(f"{opponent.name} won!")
+                self.add_deaths(1)
+                opponent.add_kills(1)
+
+            else:
+                print(f"{self.name} has {self.current_health}HP left\n{opponent.name} has {opponent.current_health}HP left")
+
+    def add_kills(self, num_kills):
+        self.kills += num_kills
+
+
+    def add_deaths(self, num_deaths):
+        self.num_deaths += num_deaths
 
     
 class Team():
