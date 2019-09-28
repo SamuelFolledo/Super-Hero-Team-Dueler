@@ -37,12 +37,15 @@ class Hero:
 
     def add_ability(self, ability):
         self.abilities.append(ability)
+        print(f"        Congrats! {self.name} now has a new ability called: {ability.name}")
 
     def add_weapon(self, weapon):
         self.abilities.append(weapon)
+        print(f"        Congrats! {self.name} now has a new weapon called: {weapon.name}")
 
     def add_armor(self, armor):
         self.armors.append(armor)
+        print(f"        Congrats! {self.name} now has a new armor called: {armor.name}")
 
     def attack(self):
         total_attack = 0
@@ -89,8 +92,22 @@ class Hero:
     def add_deaths(self, num_deaths):
         self.deaths += num_deaths
 
+    # def add_upgrade(self, upgrade, upgrade_type):
+    #     user_choice = choice(f"     Would you like to add {a_or_an(upgrade_type)} for {self.name}? ") #choice is either True of False. a_or_an returns "a weapon" or "an ability"
+    #     while user_choice:
+    #         if upgrade_type == "weapon":
+    #             self.add_weapon(create_weapon())
+    #         elif upgrade_type == "ability":
+    #             self.add_ability(create_ability())
+    #         elif upgrade_type == "armor":
+    #             self.add_armor(create_armor())
+    #         else:
+    #             print("upgrade_type is invalid")
+    #         user_choice = choice(f"     Would you like to add another {upgrade_type} for {self.name}? ")
+    #     # choice = choice(f"What {upgrade_type} would you like to add for {self.name}? ")
 #end of Hero
     
+
 class Team:
     def __init__(self, name):
         self.heroes = list()
@@ -145,69 +162,62 @@ class Arena:
         self.team_two = team_two
 
     def create_ability(self):
-        ability_name = user_input("Choose a name for an ability: ")
-        ability_max_damage = user_int_input(f"Damage amount {ability_name}: ")
+        ability_name = user_input("     Choose a name for an ability: ")
+        ability_max_damage = user_int_input(f"        Damage amount for {ability_name}: ")
         return Ability(ability_name, ability_max_damage)
 
     def create_weapon(self):
-        weapon_name = user_input("Choose a name for a weapon: ")
-        weapon_max_damage = user_int_input(f"Damage amount {weapon_name}: ")
+        weapon_name = user_input("      Choose a name for a weapon: ")
+        weapon_max_damage = user_int_input(f"         Damage amount for {weapon_name}: ")
         return Weapon(weapon_name, weapon_max_damage)
     
     def create_armor(self):
-        armor_name = user_input("Choose a name for an armor: ")
-        armor_max_defense = user_int_input(f"Damage amount {armor_name}: ")
+        armor_name = user_input("       Choose a name for an armor: ")
+        armor_max_defense = user_int_input(f"         Block amount for {armor_name}: ")
         return Armor(armor_name, armor_max_defense)
 
     def create_hero(self):
         hero_name = user_input("Choose a name for the hero: ")
         hero_starting_health = user_int_input(f"Starting health amount for {hero_name}: ")
         hero = Hero(hero_name, hero_starting_health)
-        
-        add_armor = choice(f"Would you like to add an armor for {hero.name}? ")
-        while add_armor:
-            armor = self.create_armor()
-            hero.add_armor(armor)
-            print(f"{hero.name} has a new armor: {armor.name}")
-            add_armor = choice(f"Would you like to add another armor for {hero.name}? ")
-
-        add_weapon = choice(f"Would you like to add a weapon for {hero.name}? ")
-        while add_weapon:
-            weapon = self.create_weapon()
-            hero.add_weapon(weapon)
-            print(f"{hero.name} has a new weapon: {weapon.name}")
-            add_weapon = choice(f"Would you like to add another weapon for {hero.name}? ")
-
-        add_ability = choice(f"Would you like to add an ability for {hero.name}? ")
-        while add_ability:
-            ability = self.create_ability()
-            hero.add_armor(ability)
-            print(f"{hero.name} has a new ability: {ability.name}")
-            add_ability = choice(f"Would you like to add another ability for {hero.name}? ")
-
-        print(f"{hero.name} has {hero.armors[0].name}, {hero.abilities[0].name}")
+        upgrade_types = ["weapon", "ability", "armor"]
+        for upgrade_type in upgrade_types:
+            user_choice = choice(f"     Would you like to add {a_or_an(upgrade_type)} for {hero.name}? ") #choice is either True of False. a_or_an returns "a weapon" or "an ability"
+            while user_choice:
+                if upgrade_type == "weapon":
+                    hero.add_weapon(self.create_weapon())
+                elif upgrade_type == "ability":
+                    hero.add_ability(self.create_ability())
+                elif upgrade_type == "armor":
+                    hero.add_armor(self.create_armor())
+                user_choice = choice(f"     Would you like to add another {upgrade_type} for {hero.name}? ")
+        # print(f"{hero.name} has {hero.armors[0].name}, {hero.abilities[0].name}")
         return hero
 
 #end of Arena
 
 
+#-------------------------------------------- Helper Methods ----------------------------------------------
+def a_or_an(word): #check if first char of a word is a vowel or not
+    vowels= ["a", "e", "i", "o", "u"]
+    return f"an {word}" if word[0] in vowels else f"a {word}"
 
 def user_input(prompt): #string user input
     user_input = input(prompt) 
     while user_input == "" or any(char.isalnum == False and char.isspace() == False for char in user_input): #accept alphabets, numbers, and white spaces only
-        user_input = input("Please input letters, numbers, and white spaces only: ") #ask for the input again
+        user_input = input("    Please input letters, numbers, and white spaces only: ") #ask for the input again
     return user_input
 
 def choice(prompt): #char user input for y/n
     user_input = input(prompt)
     while user_input != "y" and user_input != "Y" and user_input != "n" and user_input != "N": 
-        user_input = input("Please enter 'y' or 'n' only: ")
+        user_input = input("        Please enter 'y' or 'n' only: ")
     return True if user_input == "y" or user_input == "Y" else False
 
 def user_int_input(prompt): #int user input
     user_input = input(prompt)
     while user_input.isdigit() == False: #ensures the input is an integer
-        user_input = input("Please enter a whole number only: ")
+        user_input = input("        Please enter a whole number only: ")
     return int(user_input) 
 
 ##################################################################################################
