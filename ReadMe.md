@@ -1,4 +1,4 @@
-# Superhero-Team-Dueler
+# [Superhero-Team-Dueler](https://www.makeschool.com/academy/track/standalone/superhero-team-dueler/superhero-objects)
 Ever wondered which of your favorite super heroes would win in a fight? Team them up for battle in this introduction to object oriented programming.
 
 ## Key Terms
@@ -27,5 +27,5 @@ Ever wondered which of your favorite super heroes would win in a fight? Team the
 
 
 ### Links
-https://www.makeschool.com/academy/track/standalone/superhero-team-dueler/superhero-objects
+[Super Hero Team Dueler Tutorial](https://www.makeschool.com/academy/track/standalone/superhero-team-dueler/superhero-objects)
 ### By [Samuel P. Folledo](https://github.com/SamuelFolledo)
